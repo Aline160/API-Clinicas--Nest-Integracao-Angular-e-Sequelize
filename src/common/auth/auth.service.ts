@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { UsersService } from './../../business/services/users.service';
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -7,7 +8,7 @@ import { Users } from '../entities';
 
 @Injectable()
 export class AuthService {
-  constructor(private usersService: UsersService, private jwtService: JwtService) {}
+  constructor(private usersService: UsersService, private jwtService: JwtService) { }
 
   async generateToken(cpf: string, sub: number) {
     const payload = { cpf, sub };

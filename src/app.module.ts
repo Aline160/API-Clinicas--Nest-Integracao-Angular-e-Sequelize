@@ -1,12 +1,14 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
-import { SequelizeModule } from '@nestjs/sequelize';
+
 import { ConfigModule } from '@nestjs/config';
 import { DataAccessModule } from './data-access/data-access.module';
 import { DistributionModule } from './distribution/distribution.module';
 import { BusinessModule } from './business/business.module';
-import { Dialect } from 'sequelize';
-import { Users } from './common/entities';
+
 import { LocalStrategy } from './common/auth/local.strategy';
+import { SequelizeModule } from '@nestjs/sequelize';
+import config from 'ormconfig';
 
 @Module({
   imports: [
@@ -18,20 +20,7 @@ import { LocalStrategy } from './common/auth/local.strategy';
     BusinessModule,
     DataAccessModule,
     DistributionModule,
-    SequelizeModule.forRoot({
-      models: [Users],
-      autoLoadModels: true,
-      synchronize: true,
-      dialect: process.env.DATABASE_DIALECT as Dialect,
-      port: 5432,
-      host: process.env.DATABASE_HOST,
-      username: process.env.DATABASE_USERNAME,
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_NAME,
-      define: {
-        timestamps: false,
-      },
-    }),
+    SequelizeModule.forRoot(config)
   ],
   controllers: [],
   providers: [LocalStrategy],
